@@ -20,7 +20,7 @@ trait LoggerTrait {
 
     protected function createLogger()
     {
-        $this->logger = new Logger(propery_exists($this, "__log_title") ? $this->__log_title : "");
+        $this->logger = new Logger(property_exists($this, "__log_title") ? $this->__log_title : "");
         $file = property_exists($this, "__log_file") ? storage_path("logs/" . $this->__log_file) : storage_path("logs/common.log");
         if (strpos($file, '%') !== false)
         {
