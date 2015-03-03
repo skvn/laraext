@@ -1,0 +1,19 @@
+{
+  "name": "skvn/laraext",
+  "description": "Under development",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Sergey Kulyamin",
+      "email": "kulyamin_sergey@mail.ru"
+    },
+    {
+      "name": "Vitaly Nikolenko",
+      "email": "vit@webstandart.ru"
+    }
+  ],
+  "autoload": {
+    "psr-4": {"Laraext\\": "src"}
+  },
+  "minimum-stability": "dev"
+}
