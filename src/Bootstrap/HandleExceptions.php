@@ -26,13 +26,16 @@ class HandleExceptions extends LaravelHandleExceptions{
 
     public function handleError($level, $message, $file = '', $line = 0, $context = array())
     {
-        if ($level & $this->app['config']['laraext.errors.skip_halt_on'])
+        if (error_reporting() & $level)
         {
-            $this->getExceptionHandler()->report(new ErrorException($message, 0, $level, $file, $line));
-        }
-        else
-        {
-            throw new ErrorException($message, 0, $level, $file, $line);
+            if ($level & $this->app['config']['laraext.errors.skip_halt_on'])
+            {
+                $this->getExceptionHandler()->report(new ErrorException($message, 0, $level, $file, $line));
+            }
+            else
+            {
+                throw new ErrorException($message, 0, $level, $file, $line);
+            }
         }
     }
 
