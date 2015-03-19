@@ -29,7 +29,7 @@ class LineFormatter extends MonologLineFormatter
 
         $output = $this->format;
 
-        if (in_array(class_basename($record['context']['exception']), \Config :: get('laraext.log.skip_trace')))
+        if (isset($record['context']['exception']) && in_array(class_basename($record['context']['exception']), \Config :: get('laraext.log.skip_trace')))
         {
             $vars['message'] = get_class($record['context']['exception']) . ":" . $record['context']['exception']->getMessage();
         }
