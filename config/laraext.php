@@ -3,7 +3,8 @@ return [
     'errors' => [
         'display' => 'Off',
         'skip_halt_on' => E_WARNING | E_NOTICE,
-        'skip_log_exceptions' => []
+        'skip_log_exceptions' => [],
+        'exception_callbacks' => []
     ],
     'log' => [
         'rotate_days' => 5,

@@ -9,9 +9,16 @@ class SeparateFileHandler extends StreamHandler
         $target = \Config :: get('laraext.log.main');
         $exception_logs = \Config :: get('laraext.log.exceptions');
         $class = class_basename($record['context']['exception']);
+        $callbacks = \Config :: get('laraext.errors.exception_callbacks');
         if (array_key_exists($class, $exception_logs))
         {
             $target = $exception_logs[$class];
+        }
+        if (array_key_exists($class, $callbacks))
+        {
+            list($cls, $method) = explode('@', $callbacks[$class]);
+            $obj = new $cls;
+            $obj->$method($record['context']['exception']);
         }
         if (strpos($target, '%') !== false)
         {
