@@ -45,7 +45,7 @@ class SeparateFileHandler extends StreamHandler
                     return;
                 }
             }
-            if ($this->last_exception != (string) $record['formatted'])
+            if ($this->last_exception != (string) $record['message'])
             {
                 \Mail :: raw((string) $record['formatted'], function($message) use ($mailto){
                     foreach (explode(",", $mailto) as $mail)
@@ -58,7 +58,7 @@ class SeparateFileHandler extends StreamHandler
                     $message->subject($subject);
                 });
             }
-            $this->last_exception = (string) $record['formatted'];
+            $this->last_exception = (string) $record['message'];
         }
     }
 
