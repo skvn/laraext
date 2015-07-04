@@ -4,6 +4,8 @@ use Monolog\Logger;
 
 class SeparateFileHandler extends StreamHandler
 {
+    protected $last_exception = null;
+
     protected function write(array $record)
     {
         $target = \Config :: get('laraext.log.main');
@@ -43,16 +45,20 @@ class SeparateFileHandler extends StreamHandler
                     return;
                 }
             }
-            \Mail :: raw((string) $record['formatted'], function($message) use ($mailto){
-                foreach (explode(",", $mailto) as $mail)
-                {
-                    $message->to($mail);
-                }
-                $subject = \Config :: get('laraext.log.mailto_subject');
-                $subject = str_replace('%u', \Config :: get('app.url'), $subject);
-                $subject = str_replace('%i', \Config :: get('app.instance_name'), $subject);
-                $message->subject($subject);
-            });
+            if ($this->last_exception != (string) $record['formatted'])
+            {
+                \Mail :: raw((string) $record['formatted'], function($message) use ($mailto){
+                    foreach (explode(",", $mailto) as $mail)
+                    {
+                        $message->to($mail);
+                    }
+                    $subject = \Config :: get('laraext.log.mailto_subject');
+                    $subject = str_replace('%u', \Config :: get('app.url'), $subject);
+                    $subject = str_replace('%i', \Config :: get('app.instance_name'), $subject);
+                    $message->subject($subject);
+                });
+            }
+            $this->last_exception = (string) $record['formatted'];
         }
     }
 
