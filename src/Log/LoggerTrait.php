@@ -6,22 +6,38 @@ use Monolog\Handler\StreamHandler;
 
 trait LoggerTrait {
 
-    protected $logger = null;
+    protected $loggers = [];
 
 
-    protected function getLogger()
+    protected function getLogger($name = null)
     {
-        if (is_null($this->logger))
+        if (empty($name))
         {
-            $this->createLogger();
+            $name = "_default_";
         }
-        return $this->logger;
+        if (!isset($this->loggers[$name]))
+        {
+            $this->createLogger($name);
+        }
+        return $this->loggers[$name];
     }
 
-    protected function createLogger()
+    protected function createLogger($name)
     {
-        $this->logger = new Logger(property_exists($this, "__log_title") ? $this->__log_title : "");
-        $file = property_exists($this, "__log_file") ? storage_path("logs/" . $this->__log_file) : storage_path("logs/common.log");
+        $logger_title = "";
+        if ($name == "_default_")
+        {
+            $logger_title = property_exists($this, "__log_title") ? $this->__log_title : "";
+        }
+        $this->loggers[$name] = new Logger($logger_title);
+        if ($name == "_default_")
+        {
+            $file = property_exists($this, "__log_file") ? storage_path("logs/" . $this->__log_file) : storage_path("logs/common.log");
+        }
+        else
+        {
+            $file = storage_path("logs/" . $name . ".log");
+        }
         if (strpos($file, '%') !== false)
         {
             $file = str_replace("%d", date("Ymd"), $file);
@@ -30,7 +46,7 @@ trait LoggerTrait {
         {
             mkdir(dirname($file));
         }
-        $this->logger->pushHandler(new StreamHandler($file), Logger::INFO);
+        $this->loggers[$name]->pushHandler(new StreamHandler($file), Logger::INFO);
     }
 
 
