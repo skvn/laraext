@@ -13,10 +13,11 @@ class LogRotateCommand extends Command {
 
     public function handle()
     {
+        $removed = [];
         foreach (\Config :: get('laraext.logrotate') as $pattern => $rules)
         {
             $files = \File :: glob(storage_path(str_replace('%d', '*', $pattern)));
-            sort($files);
+            rsort($files);
             if (!empty($rules['keep']))
             {
                 foreach ($files as $ind => $file)
@@ -32,10 +33,32 @@ class LogRotateCommand extends Command {
                             continue;
                         }
                     }
+                    if (!empty($rules['exclude_size_gt']))
+                    {
+                        if (filesize($file) > $rules['exclude_size_gt']*1024*1024)
+                        {
+                            continue;
+                        }
+                    }
                     unlink($file);
+                    $removed[] = $file;
                 }
             }
         }
+        if ($mailto = \Config :: get('laraext.log.mailto'))
+        {
+            \Mail :: raw(implode("\n", $removed), function($message) use ($mailto){
+                foreach (explode(",", $mailto) as $mail)
+                {
+                    $message->to($mail);
+                }
+                $subject = "Logs rotation on %i";
+                $subject = str_replace('%u', \Config :: get('app.url'), $subject);
+                $subject = str_replace('%i', \Config :: get('app.instance_name'), $subject);
+                $message->subject($subject);
+            });
+        }
+
     }
 
 
