@@ -32,6 +32,7 @@ class LogRotateCommand extends Command {
                             continue;
                         }
                     }
+                    unlink($file);
                 }
             }
         }
