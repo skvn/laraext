@@ -58,7 +58,6 @@ class LogRotateCommand extends Command {
                 $message->subject($subject);
             });
         }
-
     }
 
 
