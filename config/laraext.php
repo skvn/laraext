@@ -18,5 +18,10 @@ return [
         'mailto_only' => [],
         'mailto_except' => ['NotFoundHttpException'],
         'mailto_subject' => "Uncaught exception at %u"
+    ],
+    'logrotate' => [
+        'logs/laravel_%d.log' => ['keep' => 10, 'exclude' => '\d{6}01\.log$', 'exclude_size_gt' => 1],
+        'logs/not_found_%d.log' => ['keep' => 10],
+        'logs/php_%d.log' => ['keep' => 10]
     ]
 ];
