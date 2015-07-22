@@ -16,7 +16,15 @@ class LogRotateCommand extends Command {
         $removed = [];
         foreach (\Config :: get('laraext.logrotate') as $pattern => $rules)
         {
-            $files = \File :: glob(storage_path(str_replace('%d', '*', $pattern)));
+            $files =[];
+            $list = \File :: files(dirname(storage_path($pattern)));
+            foreach ($list as $f)
+            {
+                if (preg_match("#^".str_replace('%d', '.+', basename($pattern))."$#", basename($f)))
+                {
+                    $files[] = $f;
+                }
+            }
             rsort($files);
             if (!empty($rules['keep']))
             {
