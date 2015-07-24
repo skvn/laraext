@@ -17,15 +17,33 @@ class LogRotateCommand extends Command {
         foreach (\Config :: get('laraext.logrotate') as $pattern => $rules)
         {
             $files =[];
+            $dirs = [];
             $list = \File :: files(dirname(storage_path($pattern)));
+            $dirlist = \File :: directories(dirname(storage_path($pattern)));
             foreach ($list as $f)
             {
-                if (preg_match("#^".str_replace('%d', '.+', basename($pattern))."$#", basename($f)))
+                if (preg_match("#^".str_replace('%d', '\d+', basename($pattern))."$#", basename($f)))
+                {
+                    $files[] = $f;
+                }
+                if (preg_match("#^".str_replace('*', '.+', basename($pattern))."$#", basename($f)))
                 {
                     $files[] = $f;
                 }
             }
+            foreach ($dirlist as $d)
+            {
+                if (preg_match("#^".str_replace('%d', '\d+', basename($pattern))."$#", basename($d)))
+                {
+                    $dirs[] = $d;
+                }
+                if (preg_match("#^".str_replace('*', '.+', basename($pattern))."$#", basename($d)))
+                {
+                    $dirs[] = $d;
+                }
+            }
             rsort($files);
+            rsort($dirs);
             if (!empty($rules['keep']))
             {
                 foreach ($files as $ind => $file)
@@ -52,6 +70,19 @@ class LogRotateCommand extends Command {
                     $removed[] = $file;
                 }
             }
+            if (!empty($rules['keep_dir']))
+            {
+                foreach ($dirs as $ind => $dir)
+                {
+                    if ($ind < $rules['keep_dir'])
+                    {
+                        continue;
+                    }
+                    \File :: deleteDirectory($dir);
+                    $removed[] = $dir;
+                }
+            }
+
         }
         if ($mailto = \Config :: get('laraext.log.mailto'))
         {
