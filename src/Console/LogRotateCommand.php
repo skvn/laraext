@@ -16,6 +16,10 @@ class LogRotateCommand extends Command {
         $removed = [];
         foreach (\Config :: get('laraext.logrotate') as $pattern => $rules)
         {
+            if (!file_exists(dirname(storage_path($pattern))))
+            {
+                continue;
+            }
             $files =[];
             $dirs = [];
             $list = \File :: files(dirname(storage_path($pattern)));
