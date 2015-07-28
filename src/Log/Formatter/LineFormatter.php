@@ -34,7 +34,7 @@ class LineFormatter extends MonologLineFormatter
             $vars['message'] = get_class($record['context']['exception']) . ":" . $record['context']['exception']->getMessage();
         }
 
-        if (\Auth :: check())
+        if (\App :: isBooted() && \Auth :: check())
         {
             $vars['user'] = \Auth :: user()->id;
         }
