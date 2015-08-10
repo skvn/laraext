@@ -46,7 +46,7 @@ class DbToolsCommand extends Command {
         if (!empty($list))
         {
             $tables = \DB :: select ("show tables");
-            rsort($table);
+            krsort($tables);
             $fld = 'Tables_in_' . \Config::get('database.connections.mysql.database');
             foreach ($list as $tbl)
             {
