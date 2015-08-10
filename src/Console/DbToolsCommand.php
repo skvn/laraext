@@ -29,9 +29,9 @@ class DbToolsCommand extends Command {
         {
             return;
         }
-        $old = \Files :: files(storage_path("backup"));
-        rsort($files);
-        foreach ($files as $num => $file)
+        $old = \File :: files(storage_path("backup"));
+        rsort($old);
+        foreach ($old as $num => $file)
         {
             if ($num >= \Config :: get('laraext.db.backup_keep'))
             {
