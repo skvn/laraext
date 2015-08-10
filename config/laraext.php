@@ -24,5 +24,11 @@ return [
         'logs/not_found_%d.log' => ['keep' => 10],
         'logs/php_%d.log' => ['keep' => 10],
         'logs/path/to/dir/*' => ['keep_dir' => 10]
+    ],
+    'db' => [
+        'backup_keep' => 3,
+        'tmp_tables' => [
+            ['pattern' => 'table_name_pcre_pattern', 'keep' => 1]
+        ]
     ]
 ];
