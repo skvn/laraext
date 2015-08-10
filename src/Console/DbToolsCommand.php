@@ -73,7 +73,7 @@ class DbToolsCommand extends Command {
     protected function getArguments()
     {
         return array(
-            ['tool', InputArument :: REQUIRED, 'Tool to run (backup, tmp_tables)']
+            ['tool', InputArgument :: REQUIRED, 'Tool to run (backup, tmp_tables)']
         );
     }
 
