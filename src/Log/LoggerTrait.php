@@ -2,6 +2,7 @@
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+use Monolog\Processor\WebProcessor;
 
 
 trait LoggerTrait {
@@ -29,7 +30,6 @@ trait LoggerTrait {
         {
             $logger_title = property_exists($this, "__log_title") ? $this->__log_title : "";
         }
-        $this->loggers[$name] = new Logger($logger_title);
         if ($name == "_default_")
         {
             $file = property_exists($this, "__log_file") ? storage_path("logs/" . $this->__log_file) : storage_path("logs/common.log");
@@ -46,7 +46,9 @@ trait LoggerTrait {
         {
             mkdir(dirname($file));
         }
-        $this->loggers[$name]->pushHandler(new StreamHandler($file), Logger::INFO);
+        $this->loggers[$name] = new Logger($logger_title, [], [new WebProcessor()]);
+        $this->loggers[$name]->pushHandler($handler = new StreamHandler($file), Logger::INFO);
+        $handler->setFormatter(new Formatter\LineFormatter(null, null, true, true));
     }
 
 
