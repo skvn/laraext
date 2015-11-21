@@ -12,21 +12,9 @@ class ServiceProvider extends LServiceProvider {
     public function register()
     {
         $this->publishes([__DIR__ . '/../config/laraext.php' => config_path('laraext.php')], 'config');
-//        $configPath = __DIR__ . '/../config/laraext.php';
-//        $this->publishes([$configPath => config_path('laraext.php')], 'config');
-//        $this->mergeConfigFrom(__DIR__ . '../config/laraext.php', 'laraext');
-//        $this->publishes([__DIR__ . '/../public/' => public_path() . "/vendor/crud/"], 'assets');
-//        $this->publishes([__DIR__ . '/../database/' => base_path("database")], 'database');
-//
-//        $this->app->singleton('CmsHelper',function()
-//        {
-//            return new \LaravelCrud\Helper\CmsHelper(\Auth::user());
-//        });
-//
-//        $this->app->singleton('CrudHelper',function()
-//        {
-//            return new \LaravelCrud\Helper\CrudHelper();
-//        });
+        $this->app->bindIf('laraext.toolkit', function($app){
+            return new Toolkit\Toolkit($app);
+        }, true);
 
     }
 

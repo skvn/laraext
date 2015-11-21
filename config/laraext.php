@@ -30,5 +30,6 @@ return [
         'tmp_tables' => [
             ['pattern' => 'table_name_pcre_pattern', 'keep' => 1]
         ]
-    ]
+    ],
+    'notify_email' => env('NOTIFY_EMAIL')
 ];
