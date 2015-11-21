@@ -23,7 +23,6 @@ class Toolkit
                 foreach (explode(",", $to) as $m)
                 {
                     $message->to($m);
-                    var_dump($m);
                 }
                 $message->subject($subject);
             });
