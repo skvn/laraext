@@ -28,7 +28,7 @@ return [
     'db' => [
         'backup_keep' => 3,
         'tmp_tables' => [
-            ['pattern' => 'table_name_pcre_pattern', 'keep' => 1]
+            ['pattern' => 'table_name_pcre_pattern', 'keep' => 1, 'numeric' => false]
         ]
     ],
     'notify_email' => env('NOTIFY_EMAIL')

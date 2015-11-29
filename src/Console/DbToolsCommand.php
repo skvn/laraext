@@ -46,23 +46,42 @@ class DbToolsCommand extends Command {
         if (!empty($list))
         {
             $tables = \DB :: select ("show tables");
-            krsort($tables);
+            //krsort($tables);
             $fld = 'Tables_in_' . \Config::get('database.connections.mysql.database');
+            $tmp_tables = [];
             foreach ($list as $tbl)
             {
                 if (!empty($tbl['pattern']))
                 {
-                    $idx = 0;
+                    //$idx = 0;
                     foreach ($tables as $table)
                     {
-                        if (preg_match('#' . $tbl['pattern'] . '#', $table->$fld))
+                        if (preg_match('#' . $tbl['pattern'] . '#', $table->$fld, $matches))
                         {
-                            if ($idx >= $tbl['keep'])
+                            if ($tbl['numeric'])
                             {
-                                \DB :: statement("drop table " . $table->$fld);
+                                $tmp_tables[intval($matches[1])] = $table->$fld;
                             }
-                            $idx++;
+                            else
+                            {
+                                $tmp_tables[] = $table->$fld;
+                            }
+//                            if ($idx >= $tbl['keep'])
+//                            {
+//                                \DB :: statement("drop table " . $table->$fld);
+//                            }
+//                            $idx++;
                         }
+                    }
+                    krsort($tmp_tables);
+                    $idx = 0;
+                    foreach ($tmp_tables as $tmp_table)
+                    {
+                        if ($idx >= $tbl['keep'])
+                        {
+                            \DB :: statement("drop table " . $tmp_table);
+                        }
+                        $idx++;
                     }
                 }
             }
