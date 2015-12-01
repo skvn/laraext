@@ -48,9 +48,9 @@ class DbToolsCommand extends Command {
             $tables = \DB :: select ("show tables");
             //krsort($tables);
             $fld = 'Tables_in_' . \Config::get('database.connections.mysql.database');
-            $tmp_tables = [];
             foreach ($list as $tbl)
             {
+                $tmp_tables = [];
                 if (!empty($tbl['pattern']))
                 {
                     //$idx = 0;
