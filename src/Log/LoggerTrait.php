@@ -36,7 +36,14 @@ trait LoggerTrait {
         }
         else
         {
-            $file = storage_path("logs/" . $name . ".log");
+            if (strpos($name, "!") === 0)
+            {
+                $file = storage_path(str_replace("!", "", $name));
+            }
+            else
+            {
+                $file = storage_path("logs/" . $name . ".log");
+            }
         }
         if (strpos($file, '%') !== false)
         {
