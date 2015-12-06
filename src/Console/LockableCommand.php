@@ -27,12 +27,12 @@ class LockableCommand extends LaravelCommand
         {
             $result = parent :: execute($input, $output);
             $this->unlock();
-            $this->getLogger('!locks/laraext.log')->info('SUCCESS[' . round(microtime(true) - $t, 2) .']: ' . $this->name);
+            $this->getLogger('!locks/laraext.log')->info('SUCCESS[' . round(microtime(true) - $t, 2) .']: ' . $this->name . " " . json_encode($this->argument()));
         }
         catch (\Exception $e)
         {
             $this->unlock();
-            $this->getLogger('!locks/laraext.log')->error('ERROR[' . round(microtime(true) - $t, 2) . ']: ' . $this->name);
+            $this->getLogger('!locks/laraext.log')->error('ERROR[' . round(microtime(true) - $t, 2) . ']: ' . $this->name . " " . json_encode($this->argument()));
             throw $e;
         }
         return $result;
