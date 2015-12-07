@@ -13,6 +13,7 @@ class LockableCommand extends LaravelCommand
     protected $laraext_uid = 0;
     protected $laraext_lock = null;
     protected $laraext_single = false;
+    protected $laraext_exclusive = false;
 
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -48,7 +49,8 @@ class LockableCommand extends LaravelCommand
             'name' => $this->name,
             'args' => $this->argument(),
             'opts' => $this->option(),
-            'started' => date('Y-m-d H:i:s')
+            'started' => date('Y-m-d H:i:s'),
+            'exclusive' => $this->laraext_exclusive
         ];
         $this->laravel['files']->put($this->laraext_lock, json_encode($info) . "\n");
     }
@@ -59,6 +61,47 @@ class LockableCommand extends LaravelCommand
         {
             $this->laravel['files']->delete($this->laraext_lock);
         }
+    }
+
+    protected function getLocks()
+    {
+        $list = $this->laravel['files']->files(storage_path('locks'));
+        $jobs = [];
+        foreach ($list as $file)
+        {
+            if (preg_match("#.+laraext\.(\d+)$#", $file, $matches))
+            {
+                $job = json_decode(trim(file($file)[0]), true);
+                $job['pid'] = $matches[1];
+                $job['state'] = @pcntl_getpriority($job['pid']) === false ? "KILLED" : "ALIVE";
+                $jobs[] = $job;
+            }
+        }
+        return $jobs;
+    }
+
+    protected function isLocked()
+    {
+        $jobs = $this->getLocks();
+        foreach ($jobs as $job)
+        {
+            if ($job['name'] == $this->name && $job['pid'] != $this->laraext_pid)
+            {
+                $args = $this->argument();
+                if (count($args) == count($job['args']))
+                {
+                    foreach ($job['args'] as $k => $v)
+                    {
+                        if (!isset($args[$k]) || $args[$k] != $v)
+                        {
+                            break;
+                        }
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 

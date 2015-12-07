@@ -1,10 +1,9 @@
 <?php namespace Laraext\Console;
 
-use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-class LogRotateCommand extends Command {
+class LogRotateCommand extends LockableCommand {
 
     protected $name = 'laraext:logrotate';
     protected $description = 'Rotating logs';

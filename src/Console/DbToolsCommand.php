@@ -1,10 +1,9 @@
 <?php namespace Laraext\Console;
 
-use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-class DbToolsCommand extends Command {
+class DbToolsCommand extends LockableCommand {
 
     protected $name = 'laraext:dbtools';
     protected $description = 'Database utilities';
