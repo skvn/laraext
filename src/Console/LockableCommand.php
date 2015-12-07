@@ -17,8 +17,8 @@ class LockableCommand extends LaravelCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->pid = posix_getpid();
-        $this->uid = posix_getuid();
+        $this->laraext_pid = posix_getpid();
+        $this->laraext_uid = posix_getuid();
         $this->laraext_lock = storage_path('locks/laraext.' . $this->laraext_pid);
         $t = microtime(true);
         $this->lock();
