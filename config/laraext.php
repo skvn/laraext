@@ -33,3 +33,4 @@ return [
     ],
     'notify_email' => env('NOTIFY_EMAIL')
 ];
+
