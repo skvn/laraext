@@ -15,12 +15,40 @@ class ServiceProvider extends LServiceProvider {
         $this->app->bindIf('laraext.toolkit', function($app){
             return new Toolkit\Toolkit($app);
         }, true);
+        $this->registerCommands();
 
     }
 
 
+    protected function registerCommands()
+    {
+        $this->app->bindIf('command.laraext.db', function () {
+            return new Console\DbToolsCommand;
+        });
+
+        $this->app->bindIf('command.laraext.jobs', function () {
+            return new Console\JobsCommand;
+        });
+
+        $this->app->bindIf('command.laraext.logrotate', function () {
+            return new Console\LogRotateCommand;
+        });
+
+        $this->commands(
+            'command.laraext.db',
+            'command.laraext.jobs',
+            'command.laraext.logrotate'
+        );
+    }
+
+
+
     public function provides()
     {
-        return array();
+        return [
+            'command.laraext.db',
+            'command.laraext.jobs',
+            'command.laraext.logrotate'
+        ];
     }
 }
