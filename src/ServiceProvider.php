@@ -15,6 +15,8 @@ class ServiceProvider extends LServiceProvider {
         $this->app->bindIf('laraext.toolkit', function($app){
             return new Toolkit\Toolkit($app);
         }, true);
+        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+        $loader->alias('Laraext', Facades\LaraextToolkit :: class);
         $this->registerCommands();
 
     }
