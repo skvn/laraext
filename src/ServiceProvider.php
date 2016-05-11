@@ -7,6 +7,7 @@ class ServiceProvider extends LServiceProvider {
 
     public function boot()
     {
+        \Log :: info("__laraext__", ['browsify' => true]);
     }
 
     public function register()

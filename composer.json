@@ -15,5 +15,8 @@
   "autoload": {
     "psr-4": {"Laraext\\": "src"}
   },
-  "minimum-stability": "dev"
+  "minimum-stability": "dev",
+  "require": {
+    "php-console/php-console": "~3.1"
+  }
 }

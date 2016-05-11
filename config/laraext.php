@@ -31,6 +31,14 @@ return [
             ['pattern' => 'table_name_pcre_pattern', 'keep' => 1, 'numeric' => false]
         ]
     ],
-    'notify_email' => env('NOTIFY_EMAIL')
+    'notify_email' => env('NOTIFY_EMAIL'),
+    'console' => [
+        'enabled' => env('LOG_CONSOLE', 0),
+        'password' => env('LOG_CONSOLE_PASSWORD', ''),
+        'ips' => env('LOG_CONSOLE_IPS', '127.0.0.1'),
+        'catch_errors' => env('LOG_CONSOLE_CATCH_ERRORS', 0)
+    ]
 ];
+
+
 
