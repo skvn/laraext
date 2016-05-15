@@ -8,6 +8,7 @@ class SeparateFileHandler extends StreamHandler
     use LoggerTrait;
 
     protected $last_exception = null;
+    protected $all_exceptions = [];
 
     protected function write(array $record)
     {
@@ -58,7 +59,7 @@ class SeparateFileHandler extends StreamHandler
                     return;
                 }
             }
-            if ($this->last_exception != (string) $record['message'])
+            if (!in_array((string) $record['message'], $this->all_exceptions))
             {
                 \Mail :: raw((string) $record['formatted'], function($message) use ($mailto){
                     foreach (explode(",", $mailto) as $mail)
@@ -72,6 +73,7 @@ class SeparateFileHandler extends StreamHandler
                 });
             }
             $this->last_exception = (string) $record['message'];
+            $this->all_exceptions[] = (string) $record['message'];
         }
     }
 
