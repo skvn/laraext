@@ -38,6 +38,7 @@ class SeparateFileHandler extends StreamHandler
         if (!empty($record['context']['browsify']))
         {
             $this->logConsole($record['message']);
+            return;
         }
 
 
