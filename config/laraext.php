@@ -37,6 +37,11 @@ return [
         'password' => env('LOG_CONSOLE_PASSWORD', ''),
         'ips' => env('LOG_CONSOLE_IPS', '127.0.0.1'),
         'catch_errors' => env('LOG_CONSOLE_CATCH_ERRORS', 0)
+    ],
+    'tools' => [
+        'SomeClass@someMethod',
+        'SomeClass',
+        ['name' => 'tool_name', 'tool' => "any callable"]
     ]
 ];
 
