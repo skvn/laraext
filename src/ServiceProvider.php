@@ -1,13 +1,14 @@
 <?php namespace Laraext;
 
 use Illuminate\Support\ServiceProvider as LServiceProvider;
+use Laraext\Cache\MemcachedStore;
 
 class ServiceProvider extends LServiceProvider {
 
 
     public function boot()
     {
-        \Log :: info("__laraext__", ['browsify' => true]);
+        $this->registerCache();
     }
 
     public function register()
@@ -16,8 +17,12 @@ class ServiceProvider extends LServiceProvider {
         $this->app->bindIf('laraext.toolkit', function($app){
             return new Toolkit\Toolkit($app);
         }, true);
+        $this->app->bindIf('laraext.cache', function($app){
+            return new Cache\Cache($app);
+        }, true);
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
         $loader->alias('Laraext', Facades\LaraextToolkit :: class);
+        $loader->alias('LaraextCache', Facades\LaraextCache :: class);
         $this->registerCommands();
 
     }
@@ -44,7 +49,16 @@ class ServiceProvider extends LServiceProvider {
         );
     }
 
+    protected function registerCache()
+    {
+        $this->app['cache']->extend("memcached", function($app, $config){
+            $prefix = $config['prefix'] ?? $app['config']['cache.prefix'];
+            $memcached = $app['memcached.connector']->connect($config['servers']);
+            return $app['cache']->repository(new MemcachedStore($memcached, $prefix));
+        });
 
+
+    }
 
     public function provides()
     {

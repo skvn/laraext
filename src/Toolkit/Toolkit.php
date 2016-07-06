@@ -1,5 +1,6 @@
 <?php namespace Laraext\Toolkit;
 
+
 class Toolkit
 {
     protected $tools = [];
@@ -80,6 +81,7 @@ class Toolkit
         }
         throw new \Exception("Method " . $method . " not found in Laraext Toolkit");
     }
+
 
 
 
