@@ -14,6 +14,10 @@ class SeparateFileHandler extends StreamHandler
     {
         $target = \Config :: get('laraext.log.main');
         $exception_logs = \Config :: get('laraext.log.exceptions');
+        if (!empty($record['context']['target']))
+        {
+            $target = "logs/" .  $record['context']['target'];
+        }
         $class = null;
         if (isset($record['context']['exception']))
         {

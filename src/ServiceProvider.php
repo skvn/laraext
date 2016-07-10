@@ -8,6 +8,7 @@ class ServiceProvider extends LServiceProvider {
 
     public function boot()
     {
+        \Log :: info("__laraext__", ['browsify' => true]);
         $this->registerCache();
     }
 
@@ -42,10 +43,15 @@ class ServiceProvider extends LServiceProvider {
             return new Console\LogRotateCommand;
         });
 
+        $this->app->bindIf('command.laraext.cache', function () {
+            return new Console\CacheCommand;
+        });
+
         $this->commands(
             'command.laraext.db',
             'command.laraext.jobs',
-            'command.laraext.logrotate'
+            'command.laraext.logrotate',
+            'command.laraext.cache'
         );
     }
 
@@ -65,7 +71,8 @@ class ServiceProvider extends LServiceProvider {
         return [
             'command.laraext.db',
             'command.laraext.jobs',
-            'command.laraext.logrotate'
+            'command.laraext.logrotate',
+            'command.laraext.cache'
         ];
     }
 }
