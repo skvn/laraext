@@ -1,4 +1,4 @@
-<?php namespace Laraext\Console;
+<?php namespace Skvn\Laraext\Console;
 
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;

@@ -13,7 +13,7 @@
     }
   ],
   "autoload": {
-    "psr-4": {"Laraext\\": "src"}
+    "psr-4": {"Skvn\\Laraext\\": "src"}
   },
   "minimum-stability": "dev",
   "require": {

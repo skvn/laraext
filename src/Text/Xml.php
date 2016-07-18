@@ -1,4 +1,4 @@
-<?php namespace Laraext\Text;
+<?php namespace Skvn\Laraext\Text;
 
 class Xml {
 

@@ -1,4 +1,4 @@
-<?php namespace Laraext\Toolkit;
+<?php namespace Skvn\Laraext\Toolkit;
 
 
 class Toolkit

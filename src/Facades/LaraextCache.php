@@ -1,4 +1,4 @@
-<?php namespace Laraext\Facades;
+<?php namespace Skvn\Laraext\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

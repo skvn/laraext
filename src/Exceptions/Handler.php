@@ -1,4 +1,4 @@
-<?php namespace Laraext\Exceptions;
+<?php namespace Skvn\Laraext\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as LaravelHandler;
 use Exception;

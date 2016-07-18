@@ -1,4 +1,4 @@
-<?php namespace Laraext\Log\Formatter;
+<?php namespace Skvn\Laraext\Log\Formatter;
 
 use Monolog\Formatter\LineFormatter as MonologLineFormatter;
 use Exception;

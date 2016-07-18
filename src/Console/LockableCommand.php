@@ -1,9 +1,9 @@
-<?php namespace Laraext\Console;
+<?php namespace Skvn\Laraext\Console;
 
 use Illuminate\Console\Command as LaravelCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Laraext\Log\LoggerTrait;
+use Skvn\Laraext\Log\LoggerTrait;
 
 class LockableCommand extends LaravelCommand
 {

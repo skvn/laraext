@@ -1,9 +1,10 @@
-<?php namespace Laraext;
+<?php namespace Skvn\Laraext;
 
 use Illuminate\Support\ServiceProvider as LServiceProvider;
-use Laraext\Cache\MemcachedStore;
+use Skvn\Laraext\Cache\MemcachedStore;
 
 class ServiceProvider extends LServiceProvider {
+
 
 
     public function boot()

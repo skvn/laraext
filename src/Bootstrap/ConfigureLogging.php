@@ -1,12 +1,12 @@
-<?php namespace Laraext\Bootstrap;
+<?php namespace Skvn\Laraext\Bootstrap;
 
 use Illuminate\Foundation\Bootstrap\ConfigureLogging as LaravelConfigureLogging;
 use Illuminate\Log\Writer;
 use Monolog\Logger as Monolog;
 use Monolog\Processor\WebProcessor;
-use Laraext\Log\Formatter\LineFormatter;
+use Skvn\Laraext\Log\Formatter\LineFormatter;
 use Illuminate\Contracts\Foundation\Application;
-use Laraext\Log\Handler\SeparateFileHandler;
+use Skvn\Laraext\Log\Handler\SeparateFileHandler;
 
 class ConfigureLogging extends LaravelConfigureLogging{
 

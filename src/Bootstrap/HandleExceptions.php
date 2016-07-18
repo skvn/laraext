@@ -1,4 +1,4 @@
-<?php namespace Laraext\Bootstrap;
+<?php namespace Skvn\Laraext\Bootstrap;
 
 use Illuminate\Foundation\Bootstrap\HandleExceptions as LaravelHandleExceptions;
 use ErrorException;

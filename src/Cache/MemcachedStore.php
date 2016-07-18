@@ -1,4 +1,4 @@
-<?php namespace Laraext\Cache;
+<?php namespace Skvn\Laraext\Cache;
 
 use Memcached;
 use Illuminate\Cache\MemcachedStore as LaravelStore;

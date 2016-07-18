@@ -1,4 +1,4 @@
-<?php namespace Laraext\Log;
+<?php namespace Skvn\Laraext\Log;
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;

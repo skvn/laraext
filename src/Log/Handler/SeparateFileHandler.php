@@ -1,7 +1,7 @@
-<?php namespace Laraext\Log\Handler;
+<?php namespace Skvn\Laraext\Log\Handler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
-use Laraext\Log\LoggerTrait;
+use Skvn\Laraext\Log\LoggerTrait;
 
 class SeparateFileHandler extends StreamHandler
 {
