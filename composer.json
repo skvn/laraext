@@ -17,6 +17,7 @@
   },
   "minimum-stability": "dev",
   "require": {
+    "php": ">=7.0.0",
     "php-console/php-console": "~3.1"
   }
 }
