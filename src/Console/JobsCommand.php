@@ -5,7 +5,7 @@ use Symfony\Component\Console\Input\InputOption;
 
 class JobsCommand extends LockableCommand {
 
-    protected $name = 'laraext:jobs';
+    protected $signature = 'laraext:jobs {--clean}';
     protected $description = 'artisan jobs utilities';
 
 
@@ -18,6 +18,11 @@ class JobsCommand extends LockableCommand {
             if ($job['state'] == "KILLED")
             {
                 $this->error($job['pid'] . ". " . $job['name']);
+                if ($this->option("clean"))
+                {
+                    $this->laravel['files']->delete($job['lock']);
+                    $this->info('REMOVED');
+                }
             }
             else
             {
