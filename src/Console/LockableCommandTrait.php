@@ -75,7 +75,7 @@ trait LockableCommandTrait
         if (is_null($this->laraext_state))
         {
             $list = $this->laravel['files']->files(storage_path('locks'));
-            $this->lataext_state = [];
+            $this->laraext_state = [];
             foreach ($list as $file)
             {
                 if (preg_match("#.+laraext\.(\d+)$#", $file, $matches))
