@@ -42,6 +42,30 @@ class Toolkit
         }
     }
 
+    function loadConfig($file)
+    {
+        $path = config_path($file);
+        $parts = explode(".", $file);
+        $ext = array_pop($parts);
+        if (strpos($file, '/') === false)
+        {
+            $key = basename($file, '.' . $ext);
+        }
+        else
+        {
+            $key = str_replace("/", ".", dirname($file)) . '.' . basename($file, '.' . $ext);
+        }
+        switch ($ext)
+        {
+            case 'php':
+                $this->app['config']->set($key, require($path));
+            break;
+            case 'ini':
+                $this->app['config']->set($key, parse_ini_file($path));
+            break;
+        }
+    }
+
     function addTool($name, Callable $tool = null)
     {
         if (strpos($name, '@') !== false)
