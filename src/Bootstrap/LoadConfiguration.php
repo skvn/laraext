@@ -20,7 +20,8 @@ class LoadConfiguration extends LaravelLoadConfiguration
 
         foreach (Finder::create()->files()->name('*.*')->in($configPath) as $file) {
             $nesting = $this->getConfigurationNesting($file, $configPath);
-            $ext = array_pop(explode('.', $file));
+            $parts = explode('.', $file);
+            $ext = array_pop($parts);
 
             $key = $nesting.basename($file->getRealPath(), '.' . $ext);
             if (in_array($key, $ondemand))
@@ -38,7 +39,8 @@ class LoadConfiguration extends LaravelLoadConfiguration
     {
         foreach ($this->getConfigurationFiles($app) as $key => $path)
         {
-            $ext = array_pop(explode(".", $path));
+            $parts = explode(".", $path);
+            $ext = array_pop($parts);
             switch ($ext)
             {
                 case 'php':
