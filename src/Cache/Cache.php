@@ -102,6 +102,7 @@ class Cache
 
         $memcache = new Memcache();
         $memcache->connect(env('MEMCACHED_HOST', '127.0.0.1'), env('MEMCACHED_PORT', 11211));
+        $prefix = $this->app['config']->get('cache.prefix');
 
         $slabs = $memcache->getStats("slabs");
         $keys = array();
@@ -116,16 +117,23 @@ class Cache
             {
                 foreach ($content as $key => $info)
                 {
-                    if (isset($args['pattern']))
+                    if (!empty($args['filter_prefix']))
                     {
-                        if (!preg_match("#" . $args['pattern'] . "#", $key))
+                        if (strpos($key, $prefix . ':') !== 0)
+                        {
+                            continue;
+                        }
+                        $key = preg_replace("#^".$prefix.":#", "", $key);
+                        if (preg_match("#::tag$#", $key))
                         {
                             continue;
                         }
                     }
-                    if (isset($args['use_prefix']))
+
+
+                    if (isset($args['pattern']))
                     {
-                        if (!preg_match("#^".$this->prefix.":#", $key))
+                        if (!preg_match("#" . $args['pattern'] . "#", $key))
                         {
                             continue;
                         }
