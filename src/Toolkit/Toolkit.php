@@ -6,6 +6,7 @@ class Toolkit
     protected $tools = [];
     protected $instances = [];
     protected $app;
+    protected $loadedConfigs = [];
 
     function __construct(\Illuminate\Foundation\Application $app)
     {
@@ -44,6 +45,11 @@ class Toolkit
 
     function loadConfig($file)
     {
+        if (in_array($file, $this->loadedConfigs))
+        {
+            var_dump("loaded");
+            return;
+        }
         $path = config_path($file);
         $parts = explode(".", $file);
         $ext = array_pop($parts);
@@ -64,6 +70,7 @@ class Toolkit
                 $this->app['config']->set($key, parse_ini_file($path));
             break;
         }
+        $this->loadedConfigs[] = $file;
     }
 
     function addTool($name, Callable $tool = null)
