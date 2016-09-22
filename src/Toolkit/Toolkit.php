@@ -47,7 +47,6 @@ class Toolkit
     {
         if (in_array($file, $this->loadedConfigs))
         {
-            var_dump("loaded");
             return;
         }
         $path = config_path($file);
