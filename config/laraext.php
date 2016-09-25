@@ -42,7 +42,8 @@ return [
         'SomeClass@someMethod',
         'SomeClass',
         ['name' => 'tool_name', 'tool' => "any callable"]
-    ]
+    ],
+    'validator_class' => Illuminate\Validation\Validator :: class
 ];
 
 
