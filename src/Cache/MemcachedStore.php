@@ -22,6 +22,11 @@ class MemcachedStore extends LaravelStore
             return array_fill_keys($keys, null);
         }
 
+        if (count($keys) != count($values))
+        {
+            return array_fill_keys($keys, null);
+        }
+
         return array_combine($keys, $values);
     }
 
